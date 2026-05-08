@@ -7,9 +7,26 @@ data "terraform_remote_state" "infra" {
   }
 }
 
+resource "helm_release" "aws_load_balancer_controller" {
+  name       = "aws-load-balancer-controller"
+  repository = "https://aws.github.io/eks-charts"
+  chart      = "aws-load-balancer-controller"
+  namespace  = "kube-system"
+  version    = "1.13.0"
+  wait       = true
+  timeout    = 300
+
+  set {
+    name  = "clusterName"
+    value = local.infra.cluster_name
+  }
+}
+
 module "observability" {
   source = "../../modules/observability"
 
   chart_dir                = "${path.module}/../../../../charts/observability"
   grafana_target_group_arn = local.infra.grafana_target_group_arn
+
+  depends_on = [helm_release.aws_load_balancer_controller]
 }
