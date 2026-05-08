@@ -43,6 +43,16 @@ variable "cluster_security_group_id" {
   type        = string
 }
 
+variable "github_repo_url" {
+  description = "HTTPS URL of this repository. Cloned at boot so the platform terraform layer is available on the bastion."
+  type        = string
+}
+
+variable "terraform_state_bucket" {
+  description = "S3 bucket holding Terraform state. Bastion needs read access to run platform terraform."
+  type        = string
+}
+
 variable "instance_type" {
   description = "EC2 instance type."
   type        = string

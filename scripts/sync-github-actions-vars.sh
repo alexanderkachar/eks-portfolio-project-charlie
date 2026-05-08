@@ -14,7 +14,7 @@ Options:
   --pat TOKEN             GitHub PAT to use. If omitted, the script prompts.
   --owner OWNER           GitHub owner. Defaults to github_owner in terraform.tfvars.
   --repo REPO             GitHub repo. Defaults to github_repo in terraform.tfvars.
-  --terraform-dir DIR     Terraform environment dir. Default: terraform/environments/dev.
+  --terraform-dir DIR     Terraform environment dir. Default: terraform/infra/environments/dev.
   --dry-run               Print the variables that would be synced, but do not call GitHub.
   -h, --help              Show this help.
 
@@ -101,7 +101,7 @@ github_api() {
 }
 
 root="$(repo_root)"
-terraform_dir="$root/terraform/environments/dev"
+terraform_dir="$root/terraform/infra/environments/dev"
 github_owner=""
 github_repo=""
 github_pat="${GITHUB_PAT:-}"

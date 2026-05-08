@@ -31,9 +31,9 @@ resource "aws_ecr_repository" "this" {
 }
 
 resource "aws_ecr_lifecycle_policy" "this" {
-  for_each = aws_ecr_repository.this
+  for_each = toset(local.repository_names)
 
-  repository = each.value.name
+  repository = each.key
 
   policy = jsonencode({
     rules = [

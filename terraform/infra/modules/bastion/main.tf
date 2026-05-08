@@ -26,17 +26,27 @@ resource "aws_iam_role_policy_attachment" "ssm_core" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
 
-data "aws_iam_policy_document" "describe_cluster" {
+data "aws_iam_policy_document" "bastion" {
   statement {
+    sid       = "EKSDescribeCluster"
     actions   = ["eks:DescribeCluster"]
     resources = [var.cluster_arn]
   }
+
+  statement {
+    sid     = "TerraformStateReadWrite"
+    actions = ["s3:GetObject", "s3:PutObject", "s3:DeleteObject", "s3:ListBucket"]
+    resources = [
+      "arn:aws:s3:::${var.terraform_state_bucket}",
+      "arn:aws:s3:::${var.terraform_state_bucket}/*",
+    ]
+  }
 }
 
-resource "aws_iam_role_policy" "describe_cluster" {
-  name   = "eks-describe-cluster"
+resource "aws_iam_role_policy" "bastion" {
+  name   = "bastion-permissions"
   role   = aws_iam_role.this.id
-  policy = data.aws_iam_policy_document.describe_cluster.json
+  policy = data.aws_iam_policy_document.bastion.json
 }
 
 resource "aws_iam_instance_profile" "this" {
@@ -100,8 +110,9 @@ resource "aws_instance" "this" {
   }
 
   user_data = templatefile("${path.module}/user-data.sh.tpl", {
-    cluster_name = var.cluster_name
-    region       = var.region
+    cluster_name    = var.cluster_name
+    region          = var.region
+    github_repo_url = var.github_repo_url
   })
 
   tags = {

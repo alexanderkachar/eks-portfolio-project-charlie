@@ -1,9 +1,8 @@
 locals {
-  cluster_name                            = "${var.project_name}-${var.environment}-cluster"
-  app_ecr_repository_name                 = "${var.project_name}-${var.environment}-app"
-  chart_ecr_repository_name               = "express-app"
-  observability_chart_ecr_repository_name = "observability"
-  pat_ssm_parameter_name                  = "/${var.project_name}/github/pat"
+  cluster_name           = "${var.project_name}-${var.environment}-cluster"
+  app_ecr_repository_name = "${var.project_name}-${var.environment}-app"
+  chart_ecr_repository_name = "express-app"
+  pat_ssm_parameter_name = "/${var.project_name}/github/pat"
 }
 
 module "vpc" {
@@ -29,7 +28,6 @@ module "ecr" {
   repository_names = [
     local.app_ecr_repository_name,
     local.chart_ecr_repository_name,
-    local.observability_chart_ecr_repository_name,
   ]
 }
 
@@ -92,18 +90,6 @@ module "runner" {
   cluster_security_group_id = module.eks.cluster_security_group_id
 }
 
-module "observability" {
-  source = "../../modules/observability"
-
-  region       = var.region
-  cluster_name = module.eks.cluster_name
-  ecr_registry = module.ecr.registry_url
-  ecr_repository = local.observability_chart_ecr_repository_name
-  chart_dir    = "${path.module}/../../../charts/observability"
-
-  grafana_target_group_arn = module.elb.grafana_target_group_arn
-}
-
 module "bastion" {
   source = "../../modules/bastion"
 
@@ -118,4 +104,7 @@ module "bastion" {
   cluster_name              = module.eks.cluster_name
   cluster_arn               = module.eks.cluster_arn
   cluster_security_group_id = module.eks.cluster_security_group_id
+
+  github_repo_url        = "https://github.com/${var.github_owner}/${var.github_repo}.git"
+  terraform_state_bucket = "alexanderkachar-terraform-state"
 }

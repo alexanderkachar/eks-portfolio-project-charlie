@@ -23,6 +23,16 @@ output "cluster_arn" {
   value       = module.eks.cluster_arn
 }
 
+output "cluster_ca_data" {
+  description = "Base64-encoded cluster CA. Required by dev-platform to configure the helm provider."
+  value       = module.eks.cluster_ca_data
+}
+
+output "grafana_target_group_arn" {
+  description = "Grafana ALB target group ARN. Required by dev-platform for the TargetGroupBinding."
+  value       = module.elb.grafana_target_group_arn
+}
+
 output "github_actions_variables" {
   description = "GitHub Actions repository variables expected by deployment workflows."
   value = {
