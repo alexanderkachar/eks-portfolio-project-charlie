@@ -2,4 +2,4 @@
 # This file is committed automatically when a new image tag is detected in ECR.
 image:
   repository: "038526103886.dkr.ecr.us-east-1.amazonaws.com/project-charlie-dev-app"
-  tag: "1a363d20862221449981959524280bcad8b2bce0"
+  tag: "93277dc26c5bb4ccbb7bafd10b50ab74f77f5df8"
