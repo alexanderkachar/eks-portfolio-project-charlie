@@ -1,5 +1,5 @@
 # Managed by ArgoCD Image Updater — do not edit manually.
 # This file is committed automatically when a new image tag is detected in ECR.
 image:
-  repository: ""
-  tag: ""
+  repository: "038526103886.dkr.ecr.us-east-1.amazonaws.com/project-charlie-dev-app"
+  tag: "1a363d20862221449981959524280bcad8b2bce0"
