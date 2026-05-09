@@ -54,6 +54,16 @@ resource "helm_release" "argocd_config" {
     value = var.github_repo
   }
 
+  set {
+    name  = "app.imageRepository"
+    value = var.app_ecr_image_uri
+  }
+
+  set {
+    name  = "app.targetGroupArn"
+    value = var.app_target_group_arn
+  }
+
   set_sensitive {
     name  = "gitCreds.password"
     value = data.aws_ssm_parameter.github_pat.value

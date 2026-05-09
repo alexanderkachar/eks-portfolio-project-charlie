@@ -8,6 +8,10 @@ app:
   repoURL: ""
   githubOwner: ""
   githubRepo: ""
+  # Full ECR image URI without tag — injected by Terraform, used by Image Updater annotation.
+  imageRepository: ""
+  # Express app ALB target group ARN — injected by Terraform, set as a Helm value for ArgoCD to render.
+  targetGroupArn: ""
   targetRevision: HEAD
   # Path inside the repo to the application Helm chart.
   chartPath: charts/express-app

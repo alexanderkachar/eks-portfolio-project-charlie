@@ -31,6 +31,16 @@ variable "github_repo" {
   type        = string
 }
 
+variable "app_ecr_image_uri" {
+  description = "Full ECR image repository URI (without tag) for the Express app. Used by Image Updater to watch for new tags."
+  type        = string
+}
+
+variable "app_target_group_arn" {
+  description = "ALB target group ARN for the express-app TargetGroupBinding."
+  type        = string
+}
+
 variable "pat_ssm_parameter_name" {
   description = "SSM parameter name holding the GitHub PAT for Image Updater Git write-back."
   type        = string

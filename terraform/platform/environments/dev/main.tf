@@ -45,6 +45,8 @@ module "argocd" {
   source = "../../modules/argocd"
 
   argocd_target_group_arn = local.infra.argocd_target_group_arn
+  app_target_group_arn    = local.infra.app_target_group_arn
+  app_ecr_image_uri       = local.infra.app_ecr_image_uri
   github_owner            = var.github_owner
   github_repo             = var.github_repo
   pat_ssm_parameter_name  = var.pat_ssm_parameter_name

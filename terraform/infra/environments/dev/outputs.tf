@@ -28,6 +28,16 @@ output "cluster_ca_data" {
   value       = module.eks.cluster_ca_data
 }
 
+output "app_target_group_arn" {
+  description = "Express app ALB target group ARN. Required by dev-platform for the app TargetGroupBinding."
+  value       = module.elb.target_group_arn
+}
+
+output "app_ecr_image_uri" {
+  description = "Full ECR image URI for the Express app (without tag). Required by dev-platform for Image Updater."
+  value       = "${module.ecr.registry_url}/${local.app_ecr_repository_name}"
+}
+
 output "grafana_target_group_arn" {
   description = "Grafana ALB target group ARN. Required by dev-platform for the TargetGroupBinding."
   value       = module.elb.grafana_target_group_arn
