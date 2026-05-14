@@ -1,4 +1,4 @@
-# eks-portfolio-project-charlie
+# ArgoCD on EKS platform
 
 An end-to-end Amazon EKS platform with private cluster networking, GitOps-driven deployments via ArgoCD, and a self-contained CI runner — provisioned entirely with Terraform.
 
